@@ -1,0 +1,8 @@
+#!/bin/sh
+
+SELF=$(cd $(dirname $0); pwd)
+
+docker run -it nutsllc/toybox-hugo:0.59.0
+
+echo "complete!"
+exit 0

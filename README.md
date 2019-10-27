@@ -1,42 +1,26 @@
 # Toybox Hugo
 
+This is a Docker Container for Hugo which is static site generator.
+
+- [Hugo: The world's fastest framework for building websites](https://gohugo.io)
+
 ## Getting Start
 
-### STEP1: Build docker image
+### STEP1: clone this repository
 
 ```bash
-docker build -t hugo .
+$ git clone https://github.com/nutsllc/toybox-hugo.git
 ```
 
-### STEP2: Create New Hugo Site
+### STEP2: build docker container
+
+- Move directory named version you want to build.
+- Run bin/init script
+- Example bellow, in case of building hugo version of 0.59.0.
 
 ```bash
-docker run -v $(pwd):/site -it hugo hugo new site site
+$ cd 0.59.0
+$ sh bin/build
 ```
 
-### STEP3: Start Server
-
-```bash
-docker run -p 1313:1313 -v $(pwd)/site:/site -it hugo
-```
-
-## Install Theme
-
-### STEP1: change directory into site/
-```baas
-cd site
-```
-
-### STEP2: Download Theme files
-
-```bash
-git init
-git submodule add https://github.com/matcornic/hugo-theme-learn
-mv hugo-theme-learn themes/
-```
-
-### STEP3: Edit config.toml
-```base .
-cp themes/hugo-theme-learn/exampleSite/config.toml
-sed -i -e 's/^\(themesdir\)/#\1/' config.toml
-```
+enjyo :-)

@@ -1,0 +1,2 @@
+#!/bin/sh
+docker run --rm -it nutsllc/toybox-hugo:0.59.0 hugo version

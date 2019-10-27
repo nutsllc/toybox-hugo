@@ -1,0 +1,33 @@
+#!/bin/sh
+
+self=$(cd $(dirname $0);pwd)
+dist=${self}/..
+
+dirs=(
+    "${dist}/0.56.3"
+    "${dist}/0.57.2"
+    "${dist}/0.58.3"
+    "${dist}/0.59.0"
+)
+
+src=${self}/../seed
+for d in ${dirs[@]}; do
+    [ -d ${d} ] && rm -r ${d}
+    version=$(echo ${d} | awk -F "/" '{print $(NF - 0)}')
+
+    printf "Generate: Dockerfile for Hugo ${version} ..."
+    mkdir -p ${d}/bin
+    cp ${src}/Dockerfile.seed ${d}/Dockerfile
+    cp ${src}/.dockerignore.seed ${d}/.dockerignore
+    cp ${src}/bin/build.seed ${d}/bin/build
+    cp ${src}/bin/version.seed ${d}/bin/version
+    sed -i -e "s/{{HUGO_VERSION}}/${version}/g" ${d}/Dockerfile
+    sed -i -e "s/{{HUGO_VERSION}}/${version}/g" ${d}/bin/build
+    sed -i -e "s/{{HUGO_VERSION}}/${version}/g" ${d}/bin/version
+    echo "done."
+
+    find ${d} -name *-e | xargs rm
+done
+
+echo "complete!"
+exit 0
